@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>湿度学習サイト</title>
+  <style>
+    /* 全体的なレイアウトと間隔の調整 */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px 0; /* 上下のパディングを小さく */
+    }
+
+    .top h1 {
+      font-size: 1.8em;
+      margin: 0;
+    }
+
+    .top p {
+      font-size: 1em;
+      max-width: 500px;
+      margin: 10px 0 0 0; /* 上部に少しの余白 */
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px; /* コンテンツ間の間隔を詰める */
+      justify-content: center;
+      padding: 20px 0; /* コンテナ全体の上下スペースを減らす */
+    }
+
+    .content_item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 280px; /* 少しコンパクトに */
+      border: 1px solid #ddd;
+      padding: 8px;
+      margin: 0; /* 外側のマージンを削除 */
+    }
+
+    .content_item img {
+      width: 100%;
+      max-width: 240px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    .content_txt {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .content_item h2 {
+      font-size: 1.3em;
+      margin: 8px 0;
+    }
+
+    .content_item p {
+      font-size: 0.95em;
+      margin: 8px 0;
+    }
+
+    .more_btn {
+      display: flex;
+      justify-content: center;
+      margin-top: auto;
+    }
+
+    .more_btn a {
+      padding: 6px 10px;
+      text-decoration: none;
+      color: white;
+      background-color: #007bff;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1>湿度学習支援Webアプリケーション</h1>
+    <p>中学2年時に学習する「湿度」について理解を深めるため作成されたWebアプリケーションです。タブレット端末を横にして活用することを想定したデザインとなっています。</p>
+  </div>
+
+  <div class="container">
+    <!-- ブログ1 -->
+    <div class="content_item">
+      <img src="science_3.png" alt="飽和水蒸気量グラフ">
+      <div class="content_txt">
+        <h2>飽和水蒸気量グラフを用いて湿度を求める学習</h2>
+        <p>「温度」と「空間内の水分量」の変化が「湿度」や「水滴の量」にどのように影響を与えるかを、飽和水蒸気量グラフを使って理解しましょう。</p>
+        <div class="more_btn">
+          <a href="science_graph.html">開く</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ブログ2 -->
+    <div class="content_item">
+      <img src="家具.png" alt="湿度の変化">
+      <div class="content_txt">
+        <h2>日常生活での湿度とその変化</h2>
+        <p>「温度」や「水蒸気量」の変化が私たちの生活環境にどのような影響を与えるのかを学びましょう。</p>
+        <div class="more_btn">
+          <a href="science_house.html">開く</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

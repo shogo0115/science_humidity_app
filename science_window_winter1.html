@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>湿度と結露を学ぼう！</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.top-buttons {
+    display: flex;
+    justify-content: flex-start; /* 左寄せに配置 */
+    gap: 20px; /* ボタン間の隙間 */
+    margin-bottom: 20px; /* ボタンとコンテンツの間隔 */
+}
+
+.nav-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between; /* 均等に配置 */
+    align-items: flex-start; /* 上揃え */
+    gap: 20px; /* 各項目の間隔 */
+}
+
+.control {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 160px; /* 外枠の幅を設定 */
+    height: 250px; /* 外枠の高さを設定 */
+    display: flex; /* 中身を縦方向に揃えるため */
+    flex-direction: column; /* 縦並びにする */
+    justify-content: center; /* 縦方向の中央揃え */
+    align-items: center; /* 横方向の中央揃え */
+    font-size: 1.2em; /* フォントサイズを大きく */
+}
+
+
+
+
+.button {
+    margin-top: 5px; /* ボタンとテキストの間隔 */
+}
+
+#cupTempLabel {
+    font-size: 18px; /* 変更したいフォントサイズを設定 */
+    font-weight: bold; /* 必要に応じて文字を太くする */
+}
+
+#cupTempDisplay {
+    font-size: 24px; /* 必要なフォントサイズ */
+    font-weight: bold; /* 必要に応じて文字を太くする */
+    color: #333; /* 必要に応じて文字色を変更 */
+}
+
+#remote-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
+.button:hover:enabled {
+    background-color: #0056b3;
+}
+
+.temperature-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+#cup-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    position: relative;
+}
+
+#cup-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* 画像を縦横比を維持して枠内に収める */
+    display: block; /* ブロック要素にして中央配置 */
+    margin: 0 auto; /* 中央配置 */
+}
+
+#condensation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(100, 149, 237, 0.7);
+    transition: height 0.5s ease;
+}
+
+#condensationTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ボタンとテキストを中央揃え */
+    gap: 10px; /* ボタンとテキスト間の間隔 */
+    width: 150px; /* 横幅を固定 */
+    margin-top: 20px; /* 上方向の余白を調整 */
+    margin-left: 0px; /* 左方向に移動させる */
+}
+
+
+#condensationText {
+    font-weight: bold;
+    color: gray;
+    font-size: 24px;
+}
+
+#humidityText {
+        font-weight: bold;
+        color: black; /* 必要なら色を調整 */
+        font-size: 20px; /* 湿度表示のフォントサイズを設定 */
+}
+
+#graph-container {
+    width: 500px;
+    height: 300px;
+}
+
+/* 凡例デザイン */
+#legend {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    align-items: flex-start; /* 左揃え */
+    gap: 10px; /* 各説明間の余白を設定 */
+}
+
+.legend-item {
+    display: flex;
+    align-items: center; /* 色とテキストを中央揃え */
+    gap: 5px; /* 色とテキストの間隔 */
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black; /* 色の周囲に枠を追加 */
+}
+
+/* 横並びに配置するためのコンテナ設定 */
+#layout-container {
+    display: flex; /* 横並びに配置 */
+    justify-content: space-between; /* 均等に配置 */
+    align-items: flex-start; /* 上揃え */
+    gap: 20px; /* ボタンと写真の間隔を広げる */
+    margin-top: 30px; /* 上側の余白を追加 */
+}
+
+
+/* コップ画像と温度説明画像を縦並びに配置 */
+#photos-container {
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    align-items: center; /* 中央揃え */
+    gap: 10px; /* 各画像の間隔 */
+}
+
+/* グラフコンテナのデザイン */
+#graph-container {
+    flex: 1; /* 横幅を調整して他の要素とバランスを取る */
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    align-items: center; /* 中央揃え */
+    gap: 10px; /* グラフと凡例の間隔 */
+}
+
+#description-container {
+    margin-top: 20px; /* 全体の余白 */
+    text-align: center;
+}
+
+#condensation-explanation {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 20px; /* 下部の余白 */
+    color: #333;
+}
+
+#experiment-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* テキストとボタンの間隔 */
+}
+
+#description-text {
+    font-size: 24px;
+    line-height: 1.6;
+    margin: 0; /* 不要な余白を除去 */
+    color: #333;
+    text-align: left; /* テキストを左揃え */
+}
+
+#startExperimentButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startExperimentButton:hover {
+    background-color: #0056b3;
+}
+
+#startExperimentButton.running {
+    background-color: #ff0000; /* 赤色 */
+    color: white; /* テキスト色 */
+}
+    </style>
+</head>
+<body>
+    <div class="top-buttons">
+        <button class="nav-button" id="homeButton">ホームに戻る</button>
+        <button class="nav-button" id="observeButton">違うものを調べる</button>
+    </div>
+
+    <div class="controls">
+        <div class="control">
+          <label>部屋の温度(外の温度の初期値): <span id="roomTempDisplay">14</span>°C</label>
+            <input type="range" id="roomTempSlider" min="10" max="35" value="20">
+        </div>
+        <div class="control">
+            <label>部屋内の水分量: <span id="moistureDisplay">10.0</span>g/m³</label>
+            <input type="range" id="moistureSlider" min="1" max="40" value="10">
+        </div>
+        <div class="control">
+            <label>外の温度初期値: <span id="cupTempDisplay">10</span>°C</label>
+            <input type="range" id="cupTempSlider" min="0" max="30" value="10">
+        </div>
+    </div>
+
+    <div id="cup-container">
+        <div id="layout-container">
+            <div id="graph-container">
+                <canvas id="graphCanvas" width="550" height="350"></canvas>
+                <div id="legend">
+                    <!-- 凡例をここに表示 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="description-container">
+        <div id="experiment-controls">
+            <p id="description-text">
+                部屋の温度 <span id="roomTempValue">20</span>°C、<br>
+                部屋内の水分量 <span id="moistureValue">10.0</span>g/m³、<br>
+                外の温度 <span id="cupTempValue">10</span>°C から実験を開始します。
+            </p>
+            <button id="startExperimentButton" class="button">実験を開始する</button>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let roomTemp = 20;
+        let moisture = 10.0;
+        let cupTemp = 10;
+        let isExperimentRunning = false;
+        let coolingInterval;
+
+        // DOM要素の取得
+        const roomTempDisplay = document.getElementById('roomTempDisplay');
+        const moistureDisplay = document.getElementById('moistureDisplay');
+        const cupTempDisplay = document.getElementById('cupTempDisplay');
+        const roomTempSlider = document.getElementById('roomTempSlider');
+        const moistureSlider = document.getElementById('moistureSlider');
+        const cupTempSlider = document.getElementById('cupTempSlider');
+        const startExperimentButton = document.getElementById('startExperimentButton');
+        const graphCanvas = document.getElementById('graphCanvas');
+        const graphContext = graphCanvas.getContext('2d');
+
+        // イベントリスナー
+        roomTempSlider.addEventListener('input', () => {
+            roomTemp = parseInt(roomTempSlider.value);
+            roomTempDisplay.textContent = roomTemp;
+            updateDescription();
+        });
+
+        moistureSlider.addEventListener('input', () => {
+            moisture = parseFloat(moistureSlider.value);
+            moistureDisplay.textContent = moisture.toFixed(1);
+            updateDescription();
+        });
+
+        cupTempSlider.addEventListener('input', () => {
+            cupTemp = parseInt(cupTempSlider.value);
+            cupTempDisplay.textContent = cupTemp;
+            updateDescription();
+        });
+
+        startExperimentButton.addEventListener('click', () => {
+            if (!isExperimentRunning) {
+                isExperimentRunning = true;
+                startExperimentButton.textContent = "実験を停止する";
+                startCoolingExperiment();
+            } else {
+                isExperimentRunning = false;
+                startExperimentButton.textContent = "実験を開始する";
+                clearInterval(coolingInterval);
+            }
+        });
+
+        function startCoolingExperiment() {
+            coolingInterval = setInterval(() => {
+                if (cupTemp > 0) {
+                    cupTemp -= 0.5; // 外の温度を徐々に下げる
+                    cupTemp = parseFloat(cupTemp.toFixed(1));
+                    cupTempDisplay.textContent = cupTemp;
+                    updateCondensation();
+                } else {
+                    clearInterval(coolingInterval);
+                }
+            }, 500); // 500msごとに更新
+        }
+
+        function updateCondensation() {
+            // 飽和水蒸気量を計算
+            const saturationVapor = a(cupTemp);
+            const waterExcess = moisture - saturationVapor;
+
+            // グラフ更新
+            plotPointAndBar(graphContext, roomTemp, moisture);
+
+            if (waterExcess >= 0) {
+                // 結露発生ロジック
+                console.log('結露が発生しました！');
+            }
+        }
+
+        function updateDescription() {
+            document.getElementById('roomTempValue').textContent = roomTemp;
+            document.getElementById('moistureValue').textContent = moisture.toFixed(1);
+            document.getElementById('cupTempValue').textContent = cupTemp;
+        }
+
+        // 飽和水蒸気量を計算する関数
+        function a(T) {
+            return parseFloat((217 * e(T) / (T + 273.15)).toFixed(1));
+        }
+
+        function e(T) {
+            return 6.1078 * Math.pow(10, (7.5 * T / (T + 237.3)));
+        }
+
+        // グラフ描画関数
+        function plotPointAndBar(ctx, T, vapor) {
+            // 軸やグラフの描画
+        }
+
+        updateDescription(); // 初期説明更新
+    </script>
+</body>
+</html>
